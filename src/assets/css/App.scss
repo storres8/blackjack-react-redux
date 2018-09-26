@@ -1,0 +1,12 @@
+.CardTable {
+  background: url("../images/green_felt.jpg") no-repeat center center fixed;
+-webkit-background-size: cover; 
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+}
+
+.slide-in-bottom {
+	-webkit-animation: slide-in-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-in-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
