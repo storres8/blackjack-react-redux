@@ -67,7 +67,6 @@ const reducer = (state = initialState, action) => {
     //   }
     // }
 
-
     return {
       ...state,
       playerHand: [
@@ -77,11 +76,21 @@ const reducer = (state = initialState, action) => {
     }
 
 
-    case 'HANDLE_ACE':
+    // case 'HANDLE_ACE':
+    // return {
+    //   ...state,
+    //   playerScore: state.playerScore -= 10
+    // }
+
+    case 'DEALER_CARDS':
     return {
       ...state,
-      playerScore: state.playerScore -= 10
+      dealerHand: [
+        ...state.dealerHand, ...action.payload.cards
+      ],
+      dealerScore: state.dealerHand += cardValues(action.payload.cards)
     }
+
 
 
     default:

@@ -3,7 +3,7 @@ import Deck from './Deck'
 import PlayerCards from './PlayerCards'
 import DealerCards from './DealerCards'
 import {connect} from 'react-redux'
-import {loadInitialCards, loadCardFromDeck, handleAceInHand} from '../actions'
+import {loadInitialCards, loadCardFromDeck, loadDealerActions} from '../actions'
 
 
 class Table extends Component {
@@ -33,18 +33,23 @@ class Table extends Component {
     //     }
     // }
     //   // return this.props.playerScore
-    // }
-    playerBusts = () =>{
-      console.log(this.props.playerScore)
+    //
+
+  dealerLogic = () =>{
+     if (this.props.dealerScore < 17){
+      return this.props.loadDealerActions(this.props.deckId)
+    }else{
+      return console.log("Stand");
     }
+  }
+
 
   render(){
-    // console.log("Player Score",this.props.playerScore);
+    // console.log("Dealer Score",this.props.dealerScore);
     return(
       <div className="CardTable">
-        {this.playerBusts()}
         <button disabled={this.props.playerScore >= 21} onClick={() => this.props.loadCardFromDeck(this.props.deckId)}>Hit</button>
-        <button>Stand</button>
+        <button onClick={() => this.dealerLogic()}>Stand</button>
         <PlayerCards/>
         <DealerCards/>
       </div>
@@ -56,8 +61,9 @@ const mapStateToProps = (state) =>{
   return {
     deckId: state.deck.deckId,
     playerScore: state.playerScore,
-    playerHand: state.playerHand
+    playerHand: state.playerHand,
+    dealerScore: state.dealerScore
   }
 }
 
-export default connect(mapStateToProps, {loadInitialCards, loadCardFromDeck, handleAceInHand})(Table)
+export default connect(mapStateToProps, {loadInitialCards, loadCardFromDeck, loadDealerActions})(Table)

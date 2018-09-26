@@ -22,24 +22,30 @@ const setCards = (cards) => {
   }
 }
 
+export const loadDealerActions = (deckId) =>{
+  return (dispatch) =>{
+    fetchCardWithDeckId(deckId)
+    .then(card =>{
+      dispatch(drawDealerCard(card.cards))
+    })
+  }
+}
+
+const drawDealerCard = (cards) => {
+  return{
+    type: 'DEALER_CARDS',
+    payload: {
+      cards
+    }
+  }
+}
+
 export const loadCardFromDeck = (deckId) =>{
   return (dispatch) => {
     fetchCardWithDeckId(deckId)
     .then(card =>{
       dispatch(drawCard(card.cards))
     })
-  }
-}
-
-export const handleAceInHand = () => {
-  return (dispatch) => {
-    dispatch(handleAce())
-  }
-}
-
-const handleAce = () => {
-  return {
-    type: 'HANDLE_ACE',
   }
 }
 
