@@ -8,6 +8,10 @@ import {loadInitialCards, loadCardFromDeck, loadDealerActions} from '../actions'
 
 class Table extends Component {
 
+  state = {
+    stand: false
+  }
+
   componentDidMount(){
     this.props.loadInitialCards()
   }
@@ -36,20 +40,20 @@ class Table extends Component {
     //
 
   dealerLogic = () =>{
-     if (this.props.dealerScore < 17){
-      return this.props.loadDealerActions(this.props.deckId)
-    }else{
-      return console.log("Stand");
-    }
+    this.props.loadDealerActions(this.props.deckId)
   }
 
 
   render(){
-    // console.log("Dealer Score",this.props.dealerScore);
+    this.state.stand && this.props.dealerScore < 17 ? this.dealerLogic() : console.log('dealer stands')
     return(
       <div className="CardTable">
         <button disabled={this.props.playerScore >= 21} onClick={() => this.props.loadCardFromDeck(this.props.deckId)}>Hit</button>
-        <button onClick={() => this.dealerLogic()}>Stand</button>
+        <button onClick={() => {
+          this.setState({
+            stand: true
+          })
+        }}>Stand</button>
         <PlayerCards/>
         <DealerCards/>
       </div>

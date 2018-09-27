@@ -88,7 +88,7 @@ const reducer = (state = initialState, action) => {
       dealerHand: [
         ...state.dealerHand, ...action.payload.cards
       ],
-      dealerScore: state.dealerHand += cardValues(action.payload.cards)
+      dealerScore: state.dealerScore += cardValues(action.payload.cards)
     }
 
 
