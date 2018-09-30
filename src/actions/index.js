@@ -57,3 +57,15 @@ const drawCard = (cards) =>{
     }
   }
 }
+
+export const handleScoreWithAce = () =>{
+  return (dispatch) => {
+    dispatch(subScore())
+  }
+}
+
+const subScore = () => {
+  return {
+    type: 'HANDLE_ACE'
+  }
+}

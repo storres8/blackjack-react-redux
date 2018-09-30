@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Deck from './Deck'
+import Results from './Results'
 import PlayerCards from './PlayerCards'
 import DealerCards from './DealerCards'
 import {connect} from 'react-redux'
-import {loadInitialCards, loadCardFromDeck, loadDealerActions} from '../actions'
+import {loadInitialCards, loadCardFromDeck, loadDealerActions, handleScoreWithAce} from '../actions'
 
 
 class Table extends Component {
@@ -16,46 +17,36 @@ class Table extends Component {
     this.props.loadInitialCards()
   }
 
-  // checkForAce = () => {
-    // check players score (this.props.playerScore >= 21)
-    // check user hand for ace change score
-    // this.props.playerHand.filter(card => card.value === "ACE").forEach(card =>{
-
-  //   console.log(this.props.playerHand)
-  //
-  //   if(this.props.playerScore > 21){
-  //     this.props.playerHand.filter(card =>{ return card.value === "ACE"})
-  //   }
-  // }
-
-    //     (this.props.playerHand.includes(card => card.value === "ACE"))
-    //   }else{
-    //
-    //   }
-    //       debugger
-    //       this.props.handleAceInHand()
-    //     }
-    // }
-    //   // return this.props.playerScore
-    //
-
   dealerLogic = () =>{
     this.props.loadDealerActions(this.props.deckId)
   }
 
+  Ace = () => {
+    this.props.handleScoreWithAce()
+  }
+
 
   render(){
-    this.state.stand && this.props.dealerScore < 17 ? this.dealerLogic() : console.log('dealer stands')
+    this.state.stand && this.props.dealerScore < 17 ? this.dealerLogic() : null
+
+    const cardValues = this.props.playerHand.map(card => card.value).includes("ACE")
+    let score = this.props.playerScore
+    // console.log("card score", score)
+    const subtractBy = this.props.playerScore > 21 && cardValues ? 10 : 0
+    let newScore = ((score-subtractBy) + this.state.newScore)
+
     return(
       <div className="CardTable">
-        <button disabled={this.props.playerScore >= 21} onClick={() => this.props.loadCardFromDeck(this.props.deckId)}>Hit</button>
+        <button disabled={this.props.playerScore >= 21 || this.state.stand} onClick={() => this.props.loadCardFromDeck(this.props.deckId)}>Hit</button>
         <button onClick={() => {
           this.setState({
             stand: true
           })
         }}>Stand</button>
-        <PlayerCards/>
+
         <DealerCards/>
+        <PlayerCards/>
+        <Results stand={this.state.stand}/>
       </div>
     )
   }
@@ -70,4 +61,4 @@ const mapStateToProps = (state) =>{
   }
 }
 
-export default connect(mapStateToProps, {loadInitialCards, loadCardFromDeck, loadDealerActions})(Table)
+export default connect(mapStateToProps, {loadInitialCards, loadCardFromDeck, loadDealerActions, handleScoreWithAce})(Table)

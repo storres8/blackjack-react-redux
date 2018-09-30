@@ -4,7 +4,6 @@ import SingleDealerCard from './SingleDealerCard'
 
 class DealerCards extends Component{
   render(){
-    // console.log("dealer cards",this.props)
     return(
       <div>
         <h1>Dealer Hand</h1>
@@ -20,7 +19,7 @@ class DealerCards extends Component{
 
 const mapStateToProps = (state) =>{
   return {
-    dealerHand: state.dealerHand
+    dealerHand: state.dealerHand,
   }
 }
 

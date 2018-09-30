@@ -54,18 +54,6 @@ const reducer = (state = initialState, action) => {
     }
 
     case 'LOAD_CARD':
-    // calculate total, if its greater than 21, check for an ace, if ace -10 and
-    // const checkAce = (state.playerHand, state.playerScore) =>{
-    //   if (state.playerScore < 21){
-    //     state.playerScore += cardValues(action.payload.cards)
-    //
-    //   }else{
-    //     if(state.playerScore > 21){
-    //       const cardArray = state.playerHand.map(card => card.value === "ACE")
-    //         if(cardArray.includes())
-    //     }
-    //   }
-    // }
 
     return {
       ...state,
@@ -76,12 +64,6 @@ const reducer = (state = initialState, action) => {
     }
 
 
-    // case 'HANDLE_ACE':
-    // return {
-    //   ...state,
-    //   playerScore: state.playerScore -= 10
-    // }
-
     case 'DEALER_CARDS':
     return {
       ...state,
@@ -91,7 +73,11 @@ const reducer = (state = initialState, action) => {
       dealerScore: state.dealerScore += cardValues(action.payload.cards)
     }
 
-
+    case 'HANDLE_ACE':
+    return {
+      ...state,
+        playerScore: state.playerScore - 10
+    }
 
     default:
     return state
