@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {connect} from 'react-redux'
 import SinglePlayerCard from './SinglePlayerCard'
 
@@ -6,8 +6,6 @@ import SinglePlayerCard from './SinglePlayerCard'
 class PlayerCards extends Component {
 
   render(){
-    // console.log("players hand", this.handleAce())
-    // console.log("players score", this.props.playerScore)
     const cardValues = this.props.playerHand.map(card => card.value).includes("ACE")
     let score = this.props.playerScore
 
@@ -16,14 +14,21 @@ class PlayerCards extends Component {
 
     console.log("card score", newScore)
 
-
     return(
       <div >
         <h1>Player Hand</h1> <h2>Current Score:{newScore}</h2>
-        {
-          this.props.playerHand.map(card =>{
-            return <SinglePlayerCard key={card.code} card={card}/>
-          })
+
+        <div class="flex-container">
+          {
+            this.props.playerHand.map(card =>{
+              return <SinglePlayerCard key={card.code} card={card}/>
+            })
+          }
+        </div>
+
+        { newScore > 21 ?
+          <Fragment> <h1>Busted!!</h1> <button onClick={() => console.log("clicked")}>Play Again</button> </Fragment> :
+          null
         }
       </div>
     )

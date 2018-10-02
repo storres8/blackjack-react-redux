@@ -6,8 +6,10 @@ class SinglePlayerCard extends Component{
   render(){
     // console.log(this.props.card.value);
     return(
-      <div className="slide-in-bottom">
-        <img src={this.props.card.image}/>
+      <div >
+        <div >
+          <div><img src={this.props.card.image} className="slide-in-bottom"/></div>
+        </div>
       </div>
     )
   }

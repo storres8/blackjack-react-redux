@@ -14,10 +14,6 @@ class Results extends Component {
 
     return(
       <div>
-        { playerScore > 21 ?
-          <Fragment> <h1>Busted!!</h1> <button onClick={() => this.props.loadCardFromDeck(this.props.deckId)}>Play Again</button> </Fragment> :
-          null
-        }
         {dealerScore > 21 ? <h1>DEALER BUSTED! YOU WIN!</h1> : null}
         {playerScore === 21 ? <h1>BLACKJACK YOU WIN!</h1> : null}
       </div>

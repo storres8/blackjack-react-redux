@@ -6,7 +6,7 @@ class SinglePlayerCard extends Component{
     // console.log(this.props);
     return(
       <div >
-        <img src={this.props.card.image}/>
+        <img src={this.props.card.image} className="slide-in-top" />
       </div>
     )
   }
