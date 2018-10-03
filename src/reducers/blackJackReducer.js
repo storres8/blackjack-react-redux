@@ -5,12 +5,14 @@ import { /* your type here, CHANGE_MESSAGE */ } from '../actions/types'
 
 const initialState = {
   deck: {
-    deckId: ""
+    deckId: "",
+    remaining: 0
   },
   playerHand:[],
   dealerHand:[],
   playerScore: 0,
   dealerScore: 0,
+  stand: false,
   user:{}
 }
 
@@ -43,7 +45,8 @@ const reducer = (state = initialState, action) => {
       ...state,
       deck: {
         ...state.deck,
-        deckId: action.payload.cards.deck_id
+        deckId: action.payload.cards.deck_id,
+        remaining: action.payload.cards.remaining,
       },
       playerHand: action.payload.cards.cards.slice(0,2),
       dealerHand: action.payload.cards.cards.slice(2,4),
@@ -51,10 +54,29 @@ const reducer = (state = initialState, action) => {
       dealerScore: cardValues(action.payload.cards.cards.slice(2,4))
     }
 
-    case 'LOAD_CARD':
 
+    case 'LOAD_NEW_HAND':
     return {
       ...state,
+      deck: {
+        ...state.deck,
+        deckId: action.payload.deckId,
+        remaining: action.payload.remaining
+      },
+      playerHand: action.payload.cards.slice(0,2),
+      dealerHand: action.payload.cards.slice(2,4),
+      playerScore: cardValues(action.payload.cards.slice(0,2)),
+      dealerScore: cardValues(action.payload.cards.slice(2,4)),
+      stand: false
+    }
+
+    case 'LOAD_CARD':
+    return {
+      ...state,
+      deck: {
+        ...state.deck,
+        remaining: action.payload.remaining,
+      },
       playerHand: [
         ...state.playerHand, ...action.payload.cards
       ],
@@ -65,6 +87,10 @@ const reducer = (state = initialState, action) => {
     case 'DEALER_CARDS':
     return {
       ...state,
+      deck: {
+        ...state.deck,
+        remaining: action.payload.remaining,
+      },
       dealerHand: [
         ...state.dealerHand, ...action.payload.cards
       ],
@@ -75,6 +101,12 @@ const reducer = (state = initialState, action) => {
     return {
       ...state,
         playerScore: state.playerScore - 10
+    }
+
+    case 'HANDLE_STAND':
+    return {
+      ...state,
+      stand: true
     }
 
     default:

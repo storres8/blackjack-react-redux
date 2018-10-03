@@ -4,15 +4,11 @@ import Results from './Results'
 import PlayerCards from './PlayerCards'
 import DealerCards from './DealerCards'
 import {connect} from 'react-redux'
-import {loadInitialCards, loadDealerActions, handleScoreWithAce} from '../actions'
+import {loadInitialCards, loadDealerActions, handleScoreWithAce, handleStand} from '../actions'
 import { Button } from 'semantic-ui-react'
 
 
 class Table extends Component {
-
-  state = {
-    stand: false
-  }
 
   componentDidMount(){
     this.props.loadInitialCards()
@@ -36,29 +32,32 @@ class Table extends Component {
       let newScore = score-subtractBy
     /////////////////////////////////////////////////////////////////////////////////
 
-    this.state.stand && newScore < 17 ? this.dealerLogic() : null
+    //////////////////////////////NEW PLAYER SCORE//////////////////////////////////////
+    const cardValuesPlayer = this.props.playerHand.map(card => card.value).includes("ACE")
+    let playerScore = this.props.playerScore
 
+    const playerSubtractBy = this.props.playerScore > 21 && cardValuesPlayer ? 10 : 0
+    let newScorePlayer = playerScore-playerSubtractBy
 
+    // console.log("card score in RESULTS", newScorePlayer)
+    ///////////////////////////////////////////////////////////////////////////////////
 
+    this.props.stand && newScore < 17 ? this.dealerLogic() : null
 
     return(
       <div className="CardTable">
 
 
         <DealerCards/>
-        <Results stand={this.state.stand} />
-        <PlayerCards stand={this.state.stand}/>
+        <Results />
+        <PlayerCards />
 
         <p></p>
 
         <div class="stand-container">
 
           <div class="stand-button">
-            <button disabled={this.props.stand === true} class='ui red button' onClick={() => {
-              this.setState({
-                stand: true
-              })
-            }}>Stand</button>
+            <button disabled={this.props.stand === true || newScorePlayer >= 21} class='ui red button' onClick={() => {this.props.handleStand()}}>Stand</button>
           </div>
 
         </div>
@@ -73,8 +72,9 @@ const mapStateToProps = (state) =>{
     playerScore: state.playerScore,
     playerHand: state.playerHand,
     dealerScore: state.dealerScore,
-    dealerHand: state.dealerHand
+    dealerHand: state.dealerHand,
+    stand: state.stand
   }
 }
 
-export default connect(mapStateToProps, {loadInitialCards, loadDealerActions, handleScoreWithAce})(Table)
+export default connect(mapStateToProps, {loadInitialCards, loadDealerActions, handleScoreWithAce, handleStand})(Table)

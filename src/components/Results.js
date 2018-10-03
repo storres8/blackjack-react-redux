@@ -1,18 +1,25 @@
 import React, { Component, Fragment } from 'react';
 import {connect} from 'react-redux'
-import {loadCardFromDeck} from '../actions'
+import {loadCardFromDeck, loadPlayAgainCards, loadInitialCards} from '../actions'
 
 class Results extends Component {
 
+  handleEmpty = () =>{
+    if(this.props.remaining <= 10 && this.props.stand === true){
+      return this.props.loadInitialCards()
+    }else{
+      null
+    }
+  }
 
   result = (newScorePlayer, newScoreDealer) => {
   if(this.props.stand === true && newScoreDealer >= 17 && newScoreDealer < 21 && newScorePlayer < 21){
     if(newScorePlayer > newScoreDealer){
-      return <Fragment> <h1> YOU WIN! </h1> <button onClick={() => console.log("clicked")}>Play Again</button> </Fragment>
+      return <Fragment> <h1> YOU WIN! </h1> <button onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button> </Fragment>
     }else if(newScorePlayer < newScoreDealer){
-      return <Fragment> <h1> DEALER WINS! </h1> <button onClick={() => console.log("clicked")}>Play Again</button></Fragment>
+      return <Fragment> <h1> DEALER WINS! </h1> <button onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button></Fragment>
     }else if(newScorePlayer === newScoreDealer){
-      return <Fragment> <h1> DRAW! </h1> <button onClick={() => console.log("clicked")}>Play Again</button></Fragment>
+      return <Fragment> <h1> DRAW! </h1> <button onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button></Fragment>
     }else{
       null
     }
@@ -20,7 +27,6 @@ class Results extends Component {
     null
   }
 }
-
   render(){
   const playerScore2 = this.props.playerScore
   const dealerScore = this.props.dealerScore
@@ -31,7 +37,6 @@ class Results extends Component {
   const subtractBy = this.props.dealerScore > 21 && dealerLogic ? 10 : 0
   let newScoreDealer = score-subtractBy
 ////////////////////////////////////////////////////////////////////////////////////
-  console.log("dealer score in RESULTS", newScoreDealer)
 
 
 //////////////////////////////NEW PLAYER SCORE//////////////////////////////////////
@@ -41,9 +46,9 @@ let playerScore = this.props.playerScore
 const playerSubtractBy = this.props.playerScore > 21 && cardValuesPlayer ? 10 : 0
 let newScorePlayer = playerScore-playerSubtractBy
 
-console.log("card score in RESULTS", newScorePlayer)
+// console.log("card score in RESULTS", newScorePlayer)
 ///////////////////////////////////////////////////////////////////////////////////
-
+// console.log("stand",this.props.stand)
     return(
       <div class="results">
         <div class="box">
@@ -51,7 +56,7 @@ console.log("card score in RESULTS", newScorePlayer)
             { newScoreDealer > 21 && this.props.stand === true ?
               <Fragment>
                 <h1>DEALER BUSTED! YOU WIN!</h1>
-                <button onClick={() => console.log("clicked")}>Play Again</button>
+                <button onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button>
               </Fragment> :
               null
             }
@@ -59,7 +64,7 @@ console.log("card score in RESULTS", newScorePlayer)
               newScorePlayer > 21 ?
               <Fragment>
                 <h1> BUSTED! </h1>
-                <button onClick={() => console.log("clicked")}>Play Again</button>
+                <button onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button>
               </Fragment> :
               null
             }
@@ -67,7 +72,7 @@ console.log("card score in RESULTS", newScorePlayer)
               newScorePlayer === 21 ?
               <Fragment>
                 <h1> BLACKJACK! YOU WIN! </h1>
-                <button onClick={() => console.log("clicked")}>Play Again</button>
+                <button onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button>
               </Fragment> :
               null
             }
@@ -75,38 +80,15 @@ console.log("card score in RESULTS", newScorePlayer)
               newScoreDealer === 21 && this.props.stand === true ?
               <Fragment>
                 <h1> BLACKJACK! DEALER WINS! </h1>
-                <button onClick={() => console.log("clicked")}>Play Again</button>
+                <button onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button>
               </Fragment> :
               null
             }
             {
               this.result(newScorePlayer, newScoreDealer)
             }
+            {this.handleEmpty()}
 
-            {/* {
-              this.props.stand === true && newScoreDealer >= 17 && newScorePlayer > newScoreDealer ?
-              <Fragment>
-                <h1> YOU WIN! </h1>
-                <button onClick={() => console.log("clicked")}>Play Again</button>
-              </Fragment> :
-              null
-            } */}
-            {/* {
-              this.props.stand === true && newScoreDealer >= 21 && newScorePlayer < newScoreDealer ?
-              <Fragment>
-                <h1> DEALER WINS! </h1>
-                <button onClick={() => console.log("clicked")}>Play Again</button>
-              </Fragment> :
-              null
-            }
-            {
-              this.props.stand === true && newScorePlayer === newScoreDealer ?
-              <Fragment>
-                <h1> PUSH! </h1>
-                <button onClick={() => console.log("clicked")}>Play Again</button>
-              </Fragment> :
-              null
-            } */}
           </div>
         </div>
       </div>
@@ -120,8 +102,10 @@ const mapStateToProps = (state) =>{
     playerHand: state.playerHand,
     dealerHand: state.dealerHand,
     dealerScore: state.dealerScore,
-    deckId: state.deck.deckId
+    deckId: state.deck.deckId,
+    remaining: state.deck.remaining,
+    stand: state.stand
   }
 }
 
-export default connect(mapStateToProps, {loadCardFromDeck})(Results)
+export default connect(mapStateToProps, {loadCardFromDeck, loadPlayAgainCards, loadInitialCards})(Results)

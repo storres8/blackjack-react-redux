@@ -4,9 +4,6 @@ import SinglePlayerCard from './SinglePlayerCard'
 import {loadCardFromDeck} from '../actions'
 
 class PlayerCards extends Component {
-  state = {
-    stand: false
-  }
 
   render(){
     const cardValuesPlayer = this.props.playerHand.map(card => card.value).includes("ACE")
@@ -32,7 +29,7 @@ class PlayerCards extends Component {
         </div>
 
         <div class="player-hit-button">
-          <button  class='ui blue button' disabled={newScorePlayer >= 21 || this.props.stand} onClick={() => this.props.loadCardFromDeck(this.props.deckId)} >HIT</button>
+          <button  class='ui blue button' disabled={newScorePlayer >= 21 || this.props.stand === true} onClick={() => this.props.loadCardFromDeck(this.props.deckId)} >HIT</button>
         </div>
 
         </div>
@@ -45,7 +42,8 @@ const mapStateToProps = (state) =>{
   return {
     playerHand: state.playerHand,
     playerScore: state.playerScore,
-    deckId: state.deck.deckId
+    deckId: state.deck.deckId,
+    stand: state.stand
   }
 }
 
