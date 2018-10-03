@@ -93,4 +93,42 @@ background-size: cover;
   justify-content: center;
 }
 
+.player-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.player-cards{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.player-hit-button{
+  display: flex;
+  justify-content: center;
+}
+.stand-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stand-button{
+  display: flex;
+  justify-content: center;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box_text {
+  width: 400px;
+  height: 400px;
+}
+
 // //////////////////////////

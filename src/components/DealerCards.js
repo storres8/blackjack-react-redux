@@ -5,13 +5,13 @@ import SingleDealerCard from './SingleDealerCard'
 class DealerCards extends Component{
   render(){
 
-    const dealerLogic = this.props.dealerHand.map(card => card.value).includes("ACE")
-    let score = this.props.dealerScore
-
-    const subtractBy = this.props.dealerScore > 21 && dealerLogic ? 10 : 0
-    let newScore = score-subtractBy
-
-    console.log("dealer score", newScore)
+    // const dealerLogic = this.props.dealerHand.map(card => card.value).includes("ACE")
+    // let score = this.props.dealerScore
+    //
+    // const subtractBy = this.props.dealerScore > 21 && dealerLogic ? 10 : 0
+    // let newScore = score-subtractBy
+    //
+    // console.log("dealer score", newScore)
 
 
     return(

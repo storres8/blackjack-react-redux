@@ -38,8 +38,6 @@ const cardValues = (cards) => {
 const reducer = (state = initialState, action) => {
   switch (action.type){
 
-    // case CHANGE_MESSAGE:
-    // return {exampleMessage: 'Hola Mundo'}
     case 'LOAD_CARDS':
     return {
       ...state,
