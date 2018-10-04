@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 
-class SinglePlayerCard extends Component{
+class SingleDealerCard extends Component{
 
   render(){
-    // console.log(this.props);
+
     return(
       <div >
         <img src={this.props.card.image} className="slide-in-top" />
@@ -12,4 +12,4 @@ class SinglePlayerCard extends Component{
   }
 }
 
-export default SinglePlayerCard
+export default SingleDealerCard

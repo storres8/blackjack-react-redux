@@ -15,11 +15,26 @@ class Results extends Component {
   result = (newScorePlayer, newScoreDealer) => {
   if(this.props.stand === true && newScoreDealer >= 17 && newScoreDealer < 21 && newScorePlayer < 21){
     if(newScorePlayer > newScoreDealer){
-      return <Fragment> <h1> YOU WIN! </h1> <button onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button> </Fragment>
+      return <Fragment>
+        <div class="outcome_you_win">
+        <h1 id="result_busted"> YOU WIN! </h1>
+        <div className="button_place_you_win"><button className="ui violet button" onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button></div>
+        </div>
+      </Fragment>
     }else if(newScorePlayer < newScoreDealer){
-      return <Fragment> <h1> DEALER WINS! </h1> <button onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button></Fragment>
+      return <Fragment>
+        <div class="outcome_text_dealer_W">
+          <h1 id="result_busted" className="text-focus-in" > DEALER WINS! </h1>
+          <div className="button_place_dealer_W"> <button className="ui violet button" onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button> </div>
+        </div>
+        </Fragment>
     }else if(newScorePlayer === newScoreDealer){
-      return <Fragment> <h1> DRAW! </h1> <button onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button></Fragment>
+      return <Fragment>
+        <div class="outcome_draw">
+        <h1 id="result_busted"> DRAW! </h1>
+        <div className="button_place_draw"><button className="ui violet button" onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button></div>
+      </div>
+      </Fragment>
     }else{
       null
     }
@@ -47,43 +62,55 @@ const playerSubtractBy = this.props.playerScore > 21 && cardValuesPlayer ? 10 : 
 let newScorePlayer = playerScore-playerSubtractBy
 
 // console.log("card score in RESULTS", newScorePlayer)
+// this.props.loadPlayAgainCards(this.props.deckId)
 ///////////////////////////////////////////////////////////////////////////////////
 // console.log("stand",this.props.stand)
     return(
       <div class="results">
         <div class="box">
           <div class="box_text">
-            { newScoreDealer > 21 && this.props.stand === true ?
-              <Fragment>
-                <h1>DEALER BUSTED! YOU WIN!</h1>
-                <button onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button>
-              </Fragment> :
-              null
-            }
+
+            <div class="outcome_text_dealer_busted">
             {
-              newScorePlayer > 21 ?
+              newScoreDealer > 21 && this.props.stand === true ?
               <Fragment>
-                <h1> BUSTED! </h1>
-                <button onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button>
+                <h1 id="result_dealer_busted" className="text-focus-in"> DEALER BUSTED! YOU WIN!</h1>
+                  <div className="button_place_dealer_busted"> <button className="ui violet button" onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button> </div>
               </Fragment> :
               null
             }
+          </div>
+
+              {
+                newScorePlayer > 21 ?
+                <Fragment>
+                    <h1 id="result_busted" className="text-focus-in"> BUSTED! </h1>
+                    <div> <button className="ui violet button" onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button></div>
+                </Fragment> :
+                null
+              }
+
+            <div class="outcome_text_BJP">
             {
               newScorePlayer === 21 ?
               <Fragment>
-                <h1> BLACKJACK! YOU WIN! </h1>
-                <button onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button>
+                <h1 id="result_busted" className="text-focus-in"> BLACKJACK! YOU WIN! </h1>
+                <div className="button_place_BJP"><button className="ui violet button"  onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button></div>
               </Fragment> :
               null
             }
+            </div>
+
+            <div class="outcome_text_BJD">
             {
               newScoreDealer === 21 && this.props.stand === true ?
               <Fragment>
-                <h1> BLACKJACK! DEALER WINS! </h1>
-                <button onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button>
+                <h1 id="result_busted"> BLACKJACK! DEALER WINS! </h1>
+                <div className="button_place_BJD"><button className="ui violet button" onClick={() => this.props.loadPlayAgainCards(this.props.deckId)}>Play Again</button></div>
               </Fragment> :
               null
             }
+            </div>
             {
               this.result(newScorePlayer, newScoreDealer)
             }

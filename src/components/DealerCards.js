@@ -12,7 +12,7 @@ class DealerCards extends Component{
     // let newScore = score-subtractBy
     //
     // console.log("dealer score", newScore)
-
+  // console.log(this.props.dealerHand[0])
 
     return(
       <div>
@@ -20,7 +20,7 @@ class DealerCards extends Component{
         <div class="flex-container">
           {
             this.props.dealerHand.map(card =>{
-              return <SingleDealerCard key={card.code} card={card}/>
+              return <SingleDealerCard key={card.code} card={card}  />
             })
           }
         </div>

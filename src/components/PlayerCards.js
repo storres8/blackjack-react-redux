@@ -12,11 +12,13 @@ class PlayerCards extends Component {
     const playerSubtractBy = this.props.playerScore > 21 && cardValuesPlayer ? 10 : 0
     let newScorePlayer = playerScore-playerSubtractBy
 
-    // console.log("card score", newScorePlayer)
 
     return(
       <div >
-        <h1>Player Hand</h1> <h2>Current Score:{newScorePlayer}</h2>
+        <div class="player_hand" class="relative">
+            <h1>Player Hand</h1>
+            <h1>{newScorePlayer}</h1>
+        </div>
 
         <div class="player-container">
 
