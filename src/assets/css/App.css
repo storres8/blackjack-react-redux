@@ -132,8 +132,8 @@
   justify-content: center; }
 
 .box_text {
-  width: 374px;
-  height: 374px; }
+  width: 474px;
+  height: 484px; }
 
 .outcome_text {
   width: 300px;
@@ -215,6 +215,9 @@
   bottom: 300px;
   left: 290px;
   font-size: 200px; }
+
+.score {
+  color: #e8e5e5; }
 
 #result_busted {
   font-size: 120px;

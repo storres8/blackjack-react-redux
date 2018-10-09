@@ -16,8 +16,7 @@ class PlayerCards extends Component {
     return(
       <div >
         <div class="player_hand" class="relative">
-            <h1>Player Hand</h1>
-            <h1>{newScorePlayer}</h1>
+            <div className="score"><h1>{newScorePlayer}</h1></div>
         </div>
 
         <div class="player-container">

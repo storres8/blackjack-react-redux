@@ -16,7 +16,6 @@ class DealerCards extends Component{
 
     return(
       <div>
-        <h1>Dealer Hand</h1>
         <div class="flex-container">
           {
             this.props.dealerHand.map(card =>{
